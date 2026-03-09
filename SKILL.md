@@ -5,9 +5,9 @@ author: 大钳子
 version: 1.4.0
 homepage: https://docs.openclaw.ai
 triggers:
-  "升级 openclaw"
-  "更新大钳子"
-  "云上蜕壳"
+  - "升级 openclaw"
+  - "更新大钳子"
+  - "云上蜕壳"
 metadata: {"clawdbot":{"emoji":"🦞","requires":{"bins":["bash","pnpm","dd","swapon","swapoff","openclaw","curl"]}}}
 --
 
