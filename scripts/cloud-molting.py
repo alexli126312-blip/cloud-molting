@@ -1,4 +1,5 @@
-```python
+```
+python
 
 !/usr/bin/env python3
 """
@@ -131,7 +132,6 @@ def main():
     parser = argparse.ArgumentParser(description="云上蜕壳 - OpenClaw 安全升级技能")
     parser.add_argument('action', choices=['upgrade', 'check-online',
 
-Galex-测试中: 03-08 21:24:36
 'verify-version', 'cleanup'], 
                        help='执行的操作')
     parser.add_argument('--force', action='store_true', help='强制升级（跳过在线检查）')
@@ -156,7 +156,6 @@ Galex-测试中: 03-08 21:24:36
                 print(f"✅ 已是最新版本 ({current_version})，无需升级")
                 sys.exit(0)
 
-Galex-测试中: 03-08 21:24:42
 创建交换空间
         swap_file = create_swap_space(args.swap_size)
         
