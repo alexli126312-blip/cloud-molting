@@ -92,6 +92,7 @@ uv run {baseDir}/scripts/cloud-molting.py cleanup
 制版本验证（默认 true）
 - `CLOUD_MOLTING_ONLINE_CHECK`：启用在线版本检测（默认 true）
 - `CLOUD_MOLTING_SEARCH_TIMEOUT_SEC`：在线搜索超时时间（默认 30 秒）
+
 ## 适用环境
 
 - **阿里云 ECS**：特别优化的低内存实例
@@ -108,60 +109,31 @@ uv run {baseDir}/scripts/cloud-molting.py cleanup
 - **解决方案**：
   ```bash
 
-检查工具位置
+ # 检查工具位置
   which swapon mkswap || find /usr -name "swapon" -o -name "mkswap"
-
-如果未安装，在 CentOS/RHEL 中运行：
+  # 如果未安装，在 CentOS/RHEL 中运行：
   sudo yum install util-linux
-
-在 Ubuntu/Debian 中运行：
+  # 在 Ubuntu/Debian 中运行：
   sudo apt-get install util-linux
   ```
 
 问题：权限不足创建交换空间
+
 原因：需要 root 权限执行 swapon
+
 解决方案：确保以管理员权限运行，或使用 sudo
 
 问题：云服务器禁用 swap
+
 原因：某些云服务商默认禁用 swap 功能
+
 解决方案：直接跳过交换空间创建，尝试直接升级
 
 问题：版本显示错误或不一致
+
 原因：session_status 可能显示缓存的旧版本信息，而非真实版本
+
 解决方案：
-  ```bash
-
-故障排除
-
-常见问题及解决方案
-
-问题：无法找到 swapon/mkswap 命令
-原因：工具不在标准 PATH 中或未安装
-解决方案：
-  ```bash
-
-检查工具位置
-  which swapon mkswap || find /usr -name "swapon" -o -name "mkswap"
-
-如果未安装，在 CentOS/RHEL 中运行：
-  sudo yum install util-linux
-
-在 Ubuntu/Debian 中运行：
-  sudo apt-get install util-linux
-  ```
-
-问题：权限不足创建交换空间
-原因：需要 root 权限执行 swapon
-解决方案：确保以管理员权限运行，或使用 sudo
-
-问题：云服务器禁用 swap
-原因：某些云服务商默认禁用 swap 功能
-解决方案：直接跳过交换空间创建，尝试直接升级
-
-问题：版本显示错误或不一致
-原因：session_status 可能显示缓存的旧版本信息，而非真实版本
-解决方案：
-  ```bash
 
 始终使用以下命令获取真实版本（强制规则）
   openclaw --version
@@ -173,16 +145,16 @@ uv run {baseDir}/scripts/cloud-molting.py cleanup
   openclaw gateway restart
   ```
 
-问题：在线版本检测失败或超时
-原因：网络连接问题或搜索引擎不可用
-解决方案：
-  ```bash
+**问题：在线版本检测失败或超时**
+- **原因**：网络连接问题或搜索引擎不可用
+- **解决方案**：
+```bash
 
-禁用在线检查，使用本地模式
-  CLOUD_MOLTING_ONLINE_CHECK=false uv run {baseDir}/scripts/cloud-molting.py upgrade
+# 禁用在线检查，使用本地模式
+CLOUD_MOLTING_ONLINE_CHECK=false uv run {baseDir}/scripts/cloud-molting.py upgrade
 
-或者增加超时时间
-  CLOUD_MOLTING_SEARCH_TIMEOUT_SEC=60 uv run {baseDir}/scripts/cloud-molting.py upgrade
+# 或者增加超时时间
+CLOUD_MOLTING_SEARCH_TIMEOUT_SEC=60 uv run {baseDir}/scripts/cloud-molting.py upgrade
   ```
 
 手动执行步骤
@@ -211,11 +183,11 @@ sudo swapoff /tmp/swapfile
 sudo rm /tmp/swapfile
 ```
 
-版本历史
+## 版本历史
 
-1.4.0：品牌重塑，从"空中蜕壳"更名为"云上蜕壳"，英文名从"Air Molting"改为"Cloud Molting"；所有配置选项前缀更新为 CLOUD_MOLTING
-1.3.0：新增智能在线版本检测功能，自动搜索最新版本并仅在需要时执行升级；添加网络容错和配置选项
-1.2.0：新增版本准确性保障功能，强制使用 `openclaw --version` 获取真实版本，解决版本显示错误问题；增强故障排除指南
-1.1.0：改进故障排除，添加工具路径检查和权限处理
-1.0.0：初始版本，支持基础升级功能
+- **1.4.0**：品牌重塑，从"空中蜕壳"更名为"云上蜕壳"，英文名从"Air Molting"改为"Cloud Molting"；所有配置选项前缀更新为 CLOUD_MOLTING
+- **1.3.0**：新增智能在线版本检测功能，自动搜索最新版本并仅在需要时执行升级；添加网络容错和配置选项
+- **1.2.0**：新增版本准确性保障功能，强制使用 `openclaw --version` 获取真实版本，解决版本显示错误问题；增强故障排除指南
+- **1.1.0**：改进故障排除，添加工具路径检查和权限处理
+- **1.0.0**：初始版本，支持基础升级功能
 ```
