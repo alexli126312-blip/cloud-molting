@@ -81,54 +81,6 @@ uv run {baseDir}/scripts/cloud-molting.py cleanup
 
 ## 配置选项
 
-Galex-测试中: 03-09 02:03:54
-仅检查在线最新版本（不执行升级）
-uv run {baseDir}/scripts/cloud-molting.py check-online
-
-强制升级（跳过在线检查，直接升级）
-uv run {baseDir}/scripts/cloud-molting.py upgrade --force
-
-验证版本准确性
-uv run {baseDir}/scripts/cloud-molting.py verify-version
-
-清理临时资源（通常不需要手动调用）
-uv run {baseDir}/scripts/cloud-molting.py cleanup
-```
-
-### 聊天交互使用
-直接在聊天中说：
-- "升级大钳子"
-- "执行云上蜕壳" 
-- "更新 OpenClaw"
-- "检查最新版本"
-- "检查真实版本"
-
-## 升级流程
-
-1. **在线版本检测**：使用 searxng 搜索 OpenClaw 最新版本信息
-2. **本地版本验证**：使用 `openclaw --version` 获取准确本地版本（避免 session_status 缓存错误）
-3. **智能版本对比**：比较本地版本与在线最新版本
-4. **条件决策**：
-   - 如果本地版本 >= 在线版本 → 跳过升级，报告"已是最新版本"
-   - 如果本地版本 < 在线版本 → 继续执行升级流程
-5. **资源准备**：创建 2GB 临时交换空间（如内存 < 4GB）
-6. **执行升级**：使用 `pnpm add -g openclaw@latest` 安全更新
-7. **验证结果**：确认新版本正常工作，再次验证版本准确性
-8. **清理资源**：移除临时交换空间
-9. **报告状态**：向用户汇报最终结果（升级成功或已是最新）
-
-## 安全保障
-
-- ✅ **无破坏性**：不会删除用户数据或配置文件
-- ✅ **可回退**：如升级失败可重新安装指定版本
-- ✅ **资源保护**：自动清理临时文件，避免磁盘占用
-- ✅ **权限安全**：仅使用必要权限，避免系统风险
-- ✅ **版本准确性**：始终使用命令行验证，避免显示错误版本
-- ✅ **智能升级**：仅在真正需要时才执行升级，避免不必要的操作
-- ✅ **网络容错**：网络不可用时自动降级到本地检查模式
-
-## 配置选项
-
 可通过环境变量自定义行为：
 - `CLOUD_MOLTING_SWAP_SIZE_MB`：交换空间大小（默认 2048）
 - `CLOUD_MOLTING_TIMEOUT_MIN`：升级超时时间（默认 10 分钟）
@@ -154,8 +106,7 @@ uv run {baseDir}/scripts/cloud-molting.py cleanup
 **问题：无法找到 swapon/mkswap 命令**
 - **原因**：工具不在标准 PATH 中或未安装
 - **解决方案**：
-  ```
-bash
+  ```bash
 
 检查工具位置
   which swapon mkswap || find /usr -name "swapon" -o -name "mkswap"
